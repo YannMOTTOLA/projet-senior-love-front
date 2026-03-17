@@ -31,7 +31,7 @@ export default function HomePage() {
         const user = meRes.data;
 
         const alikeRes = await axiosInstance.get(
-          `/profiles/alike/${user.shortId}${location.search}`
+          `/profiles/alike/${user.id}${location.search}`
         );
 
         setProfiles(alikeRes.data);
