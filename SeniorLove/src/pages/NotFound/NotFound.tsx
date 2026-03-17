@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { Home, ArrowLeft, SearchX } from "lucide-react";
+import { SearchX } from "lucide-react";
 import "./NotFound.css";
 
 export default function NotFound() {

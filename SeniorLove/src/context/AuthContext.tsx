@@ -5,7 +5,7 @@
 - Le Provider : gère l'état d'auth et met à jour tous les composants enfants
 - Le hook useAuth() : permet aux composants d'accéder facilement à l'auth
  */
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axiosInstance, { refreshSession } from "../axios/axiosInstance";
 

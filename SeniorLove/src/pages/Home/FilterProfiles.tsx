@@ -34,15 +34,6 @@ type City = {
   postal_code: string;
 };
 
-type MeDTO = {
-  preferences?: {
-    ageMin?: number;
-    ageMax?: number;
-    relationType?: string;
-    interests?: string[];
-  };
-};
-
 export default function FilterProfiles() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,12 +113,12 @@ export default function FilterProfiles() {
 
     (async () => {
       try {
-        const [meRes, interestsRes] = await Promise.all([
+        const [, interestsRes] = await Promise.all([
           axiosInstance.get("/profile/me"),
           axiosInstance.get("/auth/interests"),
         ]);
 
-        const me: MeDTO = meRes.data;
+        
 
         setInterestsList(interestsRes.data);
 
