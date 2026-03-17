@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import type { ChangeEvent } from "react";
 import { useState, useEffect } from "react";
+import axiosInstance from "../../axios/axiosInstance";
 import { z } from "zod";
 
 import "./CreateAccountMember.css";
@@ -153,14 +154,10 @@ export default function CreateAccountMember() {
 
   const checkEmailExists = async (email: string) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/auth/email/${email}`);
-
-      if (res.status === 409) {
-        return true; // email pris
-      }
-      return false; // email disponible
-
-    } catch (err) {
+      const res = await axiosInstance.get(`/auth/email/${email}`);
+      return res.status === 409;
+    } catch (err: any) {
+      if (err.response?.status === 409) return true;
       console.error("Erreur vérification email :", err);
       return false;
     }
@@ -168,19 +165,15 @@ export default function CreateAccountMember() {
 
   useEffect(() => {
     if (citySelected) return;
-
     if (cityQuery.length < 2) {
       setCitySuggestions([]);
       return;
     }
-
     const timeout = setTimeout(() => {
-      fetch(`http://localhost:3001/api/cities/search?q=${cityQuery}`)
-        .then(res => res.json())
-        .then(data => setCitySuggestions(data))
+      axiosInstance.get(`/cities/search?q=${cityQuery}`)
+        .then(res => setCitySuggestions(res.data))
         .catch(() => setCitySuggestions([]));
     }, 300);
-
     return () => clearTimeout(timeout);
   }, [cityQuery, citySelected]);
 

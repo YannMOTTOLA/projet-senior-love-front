@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+import axiosInstance from "../../axios/axiosInstance";
 
 import "./CreateAccountOrganisation.css";
 
@@ -110,11 +111,8 @@ export default function CreateAccountOrganisation() {
 
     const timeout = setTimeout(async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3001/api/cities/search?q=${cityQuery}`
-        );
-        const data = await res.json();
-        setCitySuggestions(data);
+        const res = await axiosInstance.get(`/cities/search?q=${cityQuery}`);
+        setCitySuggestions(res.data);
       } catch {
         setCitySuggestions([]);
       }
@@ -195,7 +193,7 @@ export default function CreateAccountOrganisation() {
           .getPublicUrl(fileName).data.publicUrl;
       }
 
-      await axios.post("http://localhost:3001/api/auth/register/organization", {
+      await axiosInstance.post("/auth/register/organization", {
         ...form,
         logo_url,
       });

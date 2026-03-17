@@ -110,9 +110,8 @@ export default function createEvent() {
             return;
         }
         const timeout = setTimeout(() => {
-            fetch(`http://localhost:3001/api/cities/search?q=${cityQuery}`)
-                .then(res => res.json())
-                .then(data => setCitySuggestions(data))
+            axiosInstance.get(`/cities/search?q=${cityQuery}`)
+                .then(res => setCitySuggestions(res.data))
                 .catch(() => setCitySuggestions([]));
         }, 300);
 
