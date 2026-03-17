@@ -137,10 +137,8 @@ export default function LoginForm() {
       }
 
       if (["admin", "moderator"].includes(result.user.role)) {
-        await login(validation.data);
         navigate("/BackOffice", { replace: true });
       } else {
-        await login(validation.data);
         navigate("/Home", { replace: true });
       }
     } finally {
