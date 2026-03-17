@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import type { ChangeEvent } from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import axiosInstance from "../../axios/axiosInstance";
