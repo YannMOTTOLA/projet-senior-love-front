@@ -1,0 +1,201 @@
+/* GENERAL ONBOARDING */
+.onboarding__background-container {
+  position: relative;
+  min-height: 100vh;
+  background-image: url("/assets/hands.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.onboarding-container {
+  width: 100%;
+  margin: 0;
+  max-width: none;
+}
+
+/*TITRE */
+.onboarding__title-container {
+  position: absolute;
+  top: 32vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+.brand__title {
+  margin-left: -1.75rem;
+}
+
+/* BOUTONS*/
+.onboarding__buttons {
+  position: absolute;
+  bottom: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 80%;
+}
+
+.btn {
+  border: none;
+  border-radius: 32px;
+  border: none;
+  border-radius: 28px;
+  padding: 0.9rem 2rem;
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.btn--primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
+}
+
+.btn--secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-color);
+}
+
+.onboarding__feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.onboarding__feature img {
+  order: 1;
+}
+
+.onboarding__feature p {
+  order: 2;
+  flex: 1;
+}
+
+.onboarding__details-container {
+  margin: 2rem;
+  justify-content: center;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+}
+
+.onboarding__paragraph {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  text-align: justify;
+}
+
+.onboarding,
+.onboarding-container,
+.onboarding__details-container {
+  position: static;
+}
+
+.onboarding__details-container {
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+}
+
+/* DESKTOP LAYOUT  */
+@media screen and (min-width: 1024px) {
+  .onboarding__background-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-position: 25% 32%;
+    padding: 4rem 0;
+    justify-content: center;
+  }
+
+  .onboarding__title {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .logo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .onboarding__buttons {
+    position: static;
+    transform: none;
+    width: 45%;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .btn {
+    padding: 1rem 2.5rem;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+  }
+
+
+  .onboarding__text img,
+  section img {
+    width: 300px;
+    height: auto;
+  }
+
+  .onboarding__details-container {
+    margin: 8rem;
+    justify-content: center;
+  }
+
+  .onboarding__feature {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+  }
+
+  .onboarding__buttons-big {
+    width: 70%;
+  }
+
+  .onboarding__feature:nth-of-type(2) {
+    flex-direction: row;
+  }
+
+  .onboarding__feature:nth-of-type(2) img {
+    order: 2;
+  }
+
+  .onboarding__feature:nth-of-type(2) p {
+    order: 1;
+  }
+
+  .onboarding__buttons-big {
+    width: 70%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+}

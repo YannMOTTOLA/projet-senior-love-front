@@ -1,0 +1,225 @@
+.create-organisation {
+  width: auto;
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.create-organisation .btn-back {
+  font-size: 1.2rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  transition: transform 0.1s ease-out;
+}
+
+.create-organisation .header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.create-organisation .logo {
+  width: 5.5rem;
+}
+
+.create-organisation .title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.create-organisation .error {
+  color: #d9534f;
+  font-size: 0.8rem;
+  margin: 0.25rem 0;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 0.5rem;
+}
+
+.create-organisation .error--center {
+  text-align: center;
+  padding-left: 0;
+}
+
+.create-organisation .hint {
+  color: var(--text-color-caption);
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.create-organisation .form-fields input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 1.5rem;
+  border: 0.1rem solid var(--btn-primary-color);
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+.create-organisation .logo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.create-organisation .logo-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.create-organisation .logo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.create-organisation .logo-placeholder {
+  font-size: 0.8rem;
+  color: var(--text-color-caption);
+}
+
+.create-organisation .logo-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.create-organisation .logo-upload input {
+  display: none;
+}
+
+.create-organisation .logo-upload:hover {
+  background: rgba(248, 164, 80, 0.12);
+}
+
+.create-organisation .siret-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.create-organisation .verify-btn {
+  white-space: nowrap;
+  border: solid 1px var(--primary-color);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 1.5rem;
+}
+
+.create-organisation .siret-result {
+  background: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.create-organisation .siret-result__line {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+}
+
+.create-organisation .password-rules {
+  list-style: disc;
+  margin: 0.5rem auto 0.75rem;
+  padding-left: 1.25rem;
+  text-align: left;
+  width: max-content;
+}
+
+.create-organisation .password-rules li {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.create-organisation .password-rules li.invalid {
+  color: #d9534f;
+}
+
+.create-organisation .password-rules li.valid {
+  color: #5cb85c;
+  font-weight: 600;
+}
+
+.create-organisation .continue-btn {
+  border: solid 1px var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  margin: 1rem 0 0 0;
+}
+
+.city-suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0 0;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  background: white;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.city-suggestions li {
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.city-suggestions li:hover {
+  background: #f2f2f2;
+}
+
+
+@media screen and (min-width: 1024px) {
+  .create-organisation {
+    margin: 0 10rem;
+  }
+
+  .create-organisation .error {
+    font-size: 1rem;
+    padding-left: 0.75rem;
+  }
+
+  .create-organisation .btn-coutainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .create-organisation .continue-btn {
+    width: 20rem;
+  }
+
+  .create-organisation .password-rules li {
+    font-size: 1rem;
+  }
+}

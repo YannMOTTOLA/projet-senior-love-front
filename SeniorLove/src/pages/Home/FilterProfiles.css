@@ -1,0 +1,193 @@
+.form-fields input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 1.5rem;
+  border: 0.1rem solid var(--btn-primary-color);
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+.form-fields select {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 1.5rem;
+  border: 0.1rem solid var(--btn-primary-color);
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  background: white;
+}
+
+.form-fields select[multiple] {
+  border-radius: 1rem;
+}
+
+.profile-custom {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 1rem;
+  font-family: sans-serif;
+  color: #333;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+}
+
+.profile-custom .header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-custom .title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.profile-custom .logo {
+  width: 3.5rem;
+}
+
+.profile-custom .header h1 {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.profile-custom .error {
+  color: #d9534f;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.profile-custom .btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.2rem 0;
+}
+
+.profile-custom .btn--primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.profile-custom .btn--secondary {
+  background: White;
+  color: var(--primary-color);
+  padding: 1rem 2.5rem;
+  border: 0.1rem solid var(--btn-primary-color);
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.profile-custom .interests-section {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.profile-custom .interests-section p {
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+
+.profile-custom .interests-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.profile-custom .interest-chip {
+  border: 1px solid var(--btn-primary-color);
+  background: white;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.profile-custom .interest-chip.selected {
+  background: var(--btn-primary-color);
+  color: var(--primary-color);
+  border: none;
+  transform: scale(1.05);
+}
+
+.profile-custom label {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 20;
+
+  background: white;
+  border: 1px solid var(--btn-primary-color);
+  border-radius: 1rem;
+  max-height: 220px;
+  overflow-y: auto;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.autocomplete-list li {
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.autocomplete-list li:hover {
+  background: var(--btn-primary-color);
+  color: var(--primary-color);
+}
+
+@media screen and (min-width: 1024px) {
+  .profile-custom {
+    max-width: 600px;
+  }
+
+  .profile-custom .btn--primary,
+  .profile-custom .btn--secondary {
+    font-size: 1.3rem;
+    padding: 1.2rem 3.2rem;
+  }
+
+  .error {
+    font-size: 1rem;
+    padding-left: 0.75rem;
+  }
+
+  .profile-custom .interest-chip {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+  }
+}

@@ -1,0 +1,49 @@
+.btn-back {
+  font-size: 1.2rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+  transition: transform 0.1s ease-out;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.brand__title {
+  margin-left: -1.75rem;
+}
+
+.btn--secondary {
+  border: solid 1px var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0.9rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.secondary-focus:hover {
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+}
+
+.secondary-focus:active {
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+}

@@ -1,0 +1,225 @@
+.events-search {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.events-search__primary {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.events-search__city {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 240px;
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.events-search__city-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.events-search__city-input input {
+  flex: 1;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+  background: #fff;
+}
+
+.events-search__filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  border-radius: 14px;
+  padding: 0 20px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  font-weight: 900;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.events-search__filter-toggle.is-open {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.26);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.events-search__filter-toggle.has-active {
+  border-color: rgba(0, 0, 0, 0.35);
+  color: rgba(0, 0, 0, 0.95);
+}
+
+.events-search__filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.events-search__panel {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.events-search__panel.is-open {
+  display: flex;
+}
+
+.events-search__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.events-search__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.events-search__field input,
+.events-search__field select {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  padding: 0 12px;
+  font-size: 14px;
+  color: #111;
+  background: #fff;
+}
+
+.events-search__interests {
+  margin-top: 4px;
+}
+
+.events-search__interests-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.events-search__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.events-search__chip {
+  border-radius: 999px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.events-search__chip.is-selected {
+  border-color: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.events-search__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.events-search__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  border-radius: 12px;
+  padding: 0 18px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ff9b5a;
+  color: #fff;
+  font-weight: 900;
+}
+
+.events-search__btn--submit {
+  height: 52px;
+  border-radius: 14px;
+  min-width: 140px;
+}
+
+.events-search__btn.is-secondary {
+  background: #fff;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.events-search__error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: #7a0b0b;
+}
+
+@media (max-width: 900px) {
+  .events-search__city-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .events-search__btn--submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .events-search__primary {
+    align-items: stretch;
+  }
+
+  .events-search__filter-toggle {
+    width: 100%;
+  }
+
+  .events-search__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .events-search__actions {
+    justify-content: stretch;
+  }
+
+  .events-search__btn {
+    flex: 1;
+  }
+}

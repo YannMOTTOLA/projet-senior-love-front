@@ -1,0 +1,153 @@
+
+
+.form-fields input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 1.5rem;
+  border: 0.1rem solid var(--btn-primary-color);
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+.password-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ========== ROOT WRAPPER ========== */
+.profile-custom {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 1rem;
+    font-family: sans-serif;
+    color: #333;
+}
+
+/* ========== HEADER ========== */
+.profile-custom .header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-custom .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.profile-custom .logo {
+    width: 3.5rem;
+}
+
+.profile-custom .header h1 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+/* ========== ERROR MESSAGE ========== */
+.profile-custom .error {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* ========== CHECKBOXES ========== */
+.profile-custom .options {
+    margin-top: 1.5rem;
+}
+
+.profile-custom .options label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+}
+
+
+/* ========== BUTTON ========== */
+.profile-custom .btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.profile-custom .btn--primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.separator {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-color-caption); /* couleur de la ligne */
+  margin: 2rem 0;
+}
+
+.separator .dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: var(--background-color); /* même couleur que la ligne ou différente */
+  border: 1px solid var(--text-color-caption);
+  border-radius: 50%;
+}
+
+.profile-custom .btn--account {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ========== DESKTOP ========== */
+@media screen and (min-width: 1024px) {
+    .profile-custom {
+        max-width: 600px;
+    }
+
+    .profile-custom .btn--primary {
+        font-size: 1.3rem;
+        padding: 1.2rem 3.2rem;
+    }
+
+   
+}
+
+@media screen and (min-width: 1024px) {
+
+  .error {
+    font-size: 1rem;
+    padding-left: 0.75rem;
+  }
+
+  .btn-coutainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+
+  .header {
+    font-size: 1rem;
+  }
+
+}
+

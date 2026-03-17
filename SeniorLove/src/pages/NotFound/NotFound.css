@@ -1,0 +1,90 @@
+.nf404 {
+    min-height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.25rem;
+    background: var(--background-color);
+}
+
+/* ✅ 404 très grand, un seul, centré */
+.nf404::before {
+    content: "404";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+
+    font-weight: 900;
+    font-size: clamp(12rem, 42vw, 34rem);
+    line-height: 1;
+
+    color: rgba(0, 0, 0, 0.06);
+    letter-spacing: -0.04em;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ✅ contenu sans encadrement */
+.nf404__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 44rem;
+    text-align: center;
+}
+
+.nf404__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.nf404__title {
+    margin: 0 0 0.75rem;
+    font-size: 2.4rem;
+    line-height: 1.1;
+}
+
+.nf404__text {
+    margin: 0 0 1.75rem;
+    color: var(--text-color-caption);
+    font-size: 1.05rem;
+    line-height: 1.7rem;
+}
+
+/* boutons */
+.nf404__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+}
+
+.nf404__btn {
+    width: 100%;
+    max-width: 22rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+@media (min-width: 1024px) {
+    .nf404 {
+        padding: 3rem 2rem;
+    }
+
+    .nf404__actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .nf404__btn {
+        max-width: 16rem;
+    }
+}
