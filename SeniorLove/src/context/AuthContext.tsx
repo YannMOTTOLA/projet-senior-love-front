@@ -7,7 +7,8 @@
  */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import axiosInstance, { refreshSession } from "../axios/axiosInstance";
+import axiosInstance, { refreshSession, setAuthToken } from "../axios/axiosInstance";
+
 
 
 // Hook personnalisé pour la déconnexion automatique après inactivité
@@ -135,40 +136,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // ============================================
   const refresh = async () => {
     try {
-      // Appelle l'API pour vérifier si la session est valide
-      // (par exemple, via un token dans les cookies)
       const response = await refreshSession();
+      setAuthToken(response.data.accessToken);
       setUser(normalizeUser(response.data.user));
     } catch {
-      // Si la session n'est pas valide, on déconnecte l'utilisateur
+      setAuthToken(null); 
       setUser(null);
     }
-  };
+};
 
   // ============================================
   // FONCTION: Se connecter
   // ============================================
   const login = async (credentials: Credentials): Promise<AuthResult> => {
     try {
-      // Envoie les identifiants au serveur
       const response = await axiosInstance.post("/auth/login", credentials);
-
-      // Normalise les données utilisateur reçues
       const normalized = normalizeUser(response.data.user);
-
-      // Met à jour l'état local
       setUser(normalized);
 
-      // Retourne le succès avec l'utilisateur
+
+      setAuthToken(response.data.accessToken);
+
       return { success: true, user: normalized };
     } catch (error: any) {
-      // Gère les erreurs de connexion
-      // Essaie plusieurs chemins pour obtenir le message d'erreur de l'API
       const errorMessage =
         error.response?.data?.error ||
         error.response?.data?.message ||
         "Erreur de connexion. Vérifiez vos identifiants.";
-
       return { success: false, error: errorMessage };
     }
   };
@@ -178,20 +172,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      // Appelle ton backend pour supprimer les cookies
       await axiosInstance.post("/auth/logout", {}, { withCredentials: true });
-
-      // Met à jour l'état local
+      setAuthToken(null); 
       setUser(null);
-
-      // Redirige vers la page de login
       navigate("/LoginForm");
-      // ou navigate("/login") si tu utilises react-router
     } catch (error) {
       console.error("Erreur lors de la déconnexion :", error);
-      setUser(null); // On force quand même la déconnexion côté front
+      setAuthToken(null); 
+      setUser(null);
       navigate("/LoginForm");
-
     }
   };
 

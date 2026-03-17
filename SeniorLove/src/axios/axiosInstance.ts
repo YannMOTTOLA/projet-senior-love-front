@@ -139,6 +139,21 @@ axiosInstance.interceptors.response.use(
   }
 );
 
+export function setAuthToken(token: string | null) {
+  if (token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    sessionStorage.setItem('accessToken', token);
+  } else {
+    delete axiosInstance.defaults.headers.common['Authorization'];
+    sessionStorage.removeItem('accessToken');
+  }
+}
+
+const savedToken = sessionStorage.getItem('accessToken');
+if (savedToken) {
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+}
+
 export default axiosInstance;
 
 // ============================================
