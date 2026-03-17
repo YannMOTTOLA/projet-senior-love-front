@@ -21,7 +21,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   // La base URL: toutes les requêtes commenceront par cette URL
   // Au lieu d'écrire "http://localhost:3001/api/auth/login", on écrit juste "/auth/login"
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: import.meta.env.VITE_API_URL,
 
   // TRÈS IMPORTANT: withCredentials: true
   // Cela indique au navigateur d'inclure automatiquement dans CHAQUE requête:
