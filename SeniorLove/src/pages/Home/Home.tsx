@@ -1,15 +1,16 @@
-// Home.tsx
 import { useEffect, useMemo, useState } from "react";
 import "./Home.css";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import { useNavigate, useLocation } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
-
 import EventsTab from "../EventsTab/EventsTab";
+
 type Tab = "profils" | "evenements";
 
-// même logique que le backend
 const getShortId = (uuid: string) => uuid.replace(/-/g, "").slice(-6);
+
+const PROFILES_PER_PAGE = 3;
+const MAX_PROFILES = 9;
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -18,9 +19,7 @@ export default function HomePage() {
 
   const [profiles, setProfiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // index du profil actuellement affiché
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
 
   /* ================= FETCH ================= */
   useEffect(() => {
@@ -35,11 +34,11 @@ export default function HomePage() {
         );
 
         setProfiles(alikeRes.data);
-        setCurrentIndex(0);
+        setPageIndex(0);
       } catch (err) {
         console.error("Erreur chargement profils", err);
         setProfiles([]);
-        setCurrentIndex(0);
+        setPageIndex(0);
       } finally {
         setLoading(false);
       }
@@ -48,30 +47,18 @@ export default function HomePage() {
     fetchProfiles();
   }, [location.search]);
 
-  const currentProfile = useMemo(
-    () => profiles[currentIndex] ?? null,
-    [profiles, currentIndex]
+  /* ================= PAGINATION ================= */
+  const limitedProfiles = useMemo(() => profiles.slice(0, MAX_PROFILES), [profiles]);
+
+  const totalPages = Math.ceil(limitedProfiles.length / PROFILES_PER_PAGE);
+
+  const visibleProfiles = useMemo(
+    () => limitedProfiles.slice(pageIndex * PROFILES_PER_PAGE, (pageIndex + 1) * PROFILES_PER_PAGE),
+    [limitedProfiles, pageIndex]
   );
 
-  const canGoPrev = currentIndex > 0;
-  const canGoNext = currentIndex < profiles.length - 1;
-
-  const goPrev = () => {
-    if (!canGoPrev) return;
-    setCurrentIndex((i) => i - 1);
-  };
-
-  const goNext = () => {
-    if (!canGoNext) return;
-    setCurrentIndex((i) => i + 1);
-  };
-
-  const interestTags: string[] = useMemo(() => {
-    if (!currentProfile) return [];
-    return (currentProfile.interests ?? [])
-      .map((i: any) => i?.name)
-      .filter(Boolean);
-  }, [currentProfile]);
+  const canGoPrev = pageIndex > 0;
+  const canGoNext = pageIndex < totalPages - 1;
 
   return (
     <main className="home">
@@ -85,7 +72,6 @@ export default function HomePage() {
           >
             Profils
           </button>
-
           <button
             type="button"
             className={`home__tab ${tab === "evenements" ? "is-active" : ""}`}
@@ -98,69 +84,84 @@ export default function HomePage() {
 
       {/* ================= CONTENT ================= */}
       <section className="home__content">
-        {tab === "profils" && loading && <p>Chargement des profils...</p>}
-
-        {tab === "profils" && !loading && profiles.length === 0 && (
-          <p>Aucun profil ne correspond à votre recherche.</p>
-        )}
-
-        {tab === "profils" && !loading && currentProfile && (
+        {tab === "profils" && (
           <>
-            {/* zone card et flèches */}
-            <div className="home__carousel">
-              <div className="home__carousel-card">
-                <ProfileCard
-                  profile={{
-                    id: getShortId(currentProfile.id),
-                    name: currentProfile.name,
-                    // L'âge est dans member.age !
-                    age: currentProfile.member?.age ?? null,
-                    city: currentProfile.city?.name ?? "",
-                    photoUrl: currentProfile.profile_picture,
-                    labels: interestTags,
-                    isOnline: true,
-                  }}
-                  onOpenProfile={(profileId) => {
-                    navigate(`/profile/${profileId}`);
-                  }}
-                  onToggleLike={(profileId) => {
-                    console.log("toggle like", profileId);
-                  }}
-                  onRefineSearch={() => navigate("/filters")}
-                  currentIndex={currentIndex}
-                  totalProfiles={profiles.length}
-                />
-              </div>
+            {/* Bouton affiner + compteur */}
+            <div className="home__toolbar">
+              <button
+                className="card__refine-btn"
+                type="button"
+                onClick={() => navigate("/filters")}
+              >
+                Affiner la recherche
+              </button>
 
-              {/* flèches sous la card (mobile) */}
-              <div className="home__carousel-controls">
-                <button
-                  type="button"
-                  className="home__carousel-btn"
-                  onClick={goPrev}
-                  disabled={!canGoPrev}
-                  aria-label="Profil précédent"
-                >
-                  ←
-                </button>
-
-                <button
-                  type="button"
-                  className="home__carousel-btn"
-                  onClick={goNext}
-                  disabled={!canGoNext}
-                  aria-label="Profil suivant"
-                >
-                  →
-                </button>
-              </div>
+              {!loading && limitedProfiles.length > 0 && (
+                <span className="home__counter">
+                  {pageIndex * PROFILES_PER_PAGE + 1}–
+                  {Math.min((pageIndex + 1) * PROFILES_PER_PAGE, limitedProfiles.length)}
+                  /{limitedProfiles.length}
+                </span>
+              )}
             </div>
+
+            {loading && <p>Chargement des profils...</p>}
+
+            {!loading && limitedProfiles.length === 0 && (
+              <p>Aucun profil ne correspond à votre recherche.</p>
+            )}
+
+            {!loading && visibleProfiles.length > 0 && (
+              <>
+                <div className="home__grid">
+                  {visibleProfiles.map((profile) => (
+                    <ProfileCard
+                      key={profile.id}
+                      profile={{
+                        id: getShortId(profile.id),
+                        name: profile.name,
+                        age: profile.member?.age ?? null,
+                        city: profile.city?.name ?? "",
+                        photoUrl: profile.profile_picture,
+                        labels: (profile.interests ?? [])
+                          .map((i: any) => i?.name)
+                          .filter(Boolean),
+                        isOnline: true,
+                      }}
+                      onOpenProfile={(profileId) => navigate(`/profile/${profileId}`)}
+                      onToggleLike={(profileId) => console.log("toggle like", profileId)}
+                      onBlock={(profileId) => console.log("block", profileId)}
+                    />
+                  ))}
+                </div>
+
+                {/* Flèches pagination */}
+                <div className="home__carousel-controls">
+                  <button
+                    type="button"
+                    className="home__carousel-btn"
+                    onClick={() => setPageIndex(i => i - 1)}
+                    disabled={!canGoPrev}
+                    aria-label="Page précédente"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    className="home__carousel-btn"
+                    onClick={() => setPageIndex(i => i + 1)}
+                    disabled={!canGoNext}
+                    aria-label="Page suivante"
+                  >
+                    →
+                  </button>
+                </div>
+              </>
+            )}
           </>
         )}
 
-        {tab === "evenements" && <div>Événements (à venir)</div>}
         {tab === "evenements" && <EventsTab />}
-
       </section>
     </main>
   );
