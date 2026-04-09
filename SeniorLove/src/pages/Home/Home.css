@@ -4,11 +4,9 @@
   display: flex;
   flex-direction: column;
 }
-
 .home__top {
   padding: 0.875rem 1rem 0.5rem;
 }
-
 /* TABS */
 .home__tabs {
   display: flex;
@@ -16,7 +14,6 @@
   gap: 1.375rem;
   font-weight: 600;
 }
-
 .home__tab {
   background: transparent;
   border: 0;
@@ -26,11 +23,9 @@
   cursor: pointer;
   position: relative;
 }
-
 .home__tab.is-active {
   color: var(--text-color);
 }
-
 .home__tab.is-active::after {
   content: "";
   position: absolute;
@@ -41,7 +36,6 @@
   border-radius: 99px;
   background: var(--text-color);
 }
-
 /* CONTENT */
 .home__content {
   padding: 0.625rem 1rem 1.5rem;
@@ -52,7 +46,6 @@
   align-items: center;
   justify-content: flex-start;
 }
-
 /* CAROUSEL - MOBILE */
 .home__carousel {
   width: 100%;
@@ -62,7 +55,6 @@
   align-items: center;
   gap: 0;
 }
-
 .home__carousel-card {
   width: 100%;
   display: flex;
@@ -70,7 +62,6 @@
   align-items: center;
   gap: 0.625rem;
 }
-
 /* Conteneur des boutons en mobile */
 .home__carousel-controls {
   display: flex;
@@ -79,7 +70,6 @@
   margin-top: 1rem;
   order: 2;
 }
-
 .home__carousel-btn {
   height: 2.75rem;
   width: 2.75rem;
@@ -90,12 +80,10 @@
   font-size: 1.125rem;
   line-height: 1;
 }
-
 .home__carousel-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
-
 /* Compteur */
 .home__carousel-counter {
   font-weight: 700;
@@ -104,7 +92,6 @@
   margin-top: 0.5rem;
   margin-bottom: 0.375rem;
 }
-
 /* TAGS centres d'intérêt */
 .home__tags {
   width: 100%;
@@ -114,7 +101,6 @@
   gap: 0.5rem;
   justify-content: center;
 }
-
 .home__tag {
   padding: 0.375rem 0.625rem;
   border-radius: 999px;
@@ -123,7 +109,6 @@
   background: rgba(0, 0, 0, 0.06);
   color: var(--text-color);
 }
-
 /* CTA */
 .home__cta {
   width: 100%;
@@ -137,7 +122,6 @@
   color: var(--text-color-light);
   box-shadow: 0 0.625rem 1.25rem rgba(242, 162, 58, 0.35);
 }
-
 /* BOTTOM NAV */
 .bottom-nav {
   height: 4.5rem;
@@ -147,7 +131,6 @@
   padding: 0.625rem 0.375rem 0.75rem;
   background: var(--background-secondary-color);
 }
-
 .nav__item {
   border: 0;
   background: transparent;
@@ -157,14 +140,24 @@
   justify-items: center;
   color: var(--text-color-caption);
 }
-
 .nav__icon {
   font-size: 1.125rem;
   line-height: 1;
 }
-
 .nav__label {
   font-size: 0.6875rem;
+}
+
+/* GRILLE et TOOLBAR - mobile: cachées */
+.home__grid {
+  display: none;
+}
+.home__toolbar {
+  display: none;
+}
+.home__counter {
+  font-size: 0.875rem;
+  color: #888;
 }
 
 /* DESKTOP */
@@ -177,37 +170,46 @@
     gap: 0.625rem;
     max-width: 37.5rem;
   }
-
   .home__carousel-card {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
   }
-
   .home__carousel-controls {
     display: contents;
     margin-top: 0;
     order: initial;
   }
-
   .home__carousel-btn--prev {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
   }
-
   .home__carousel-btn--next {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
   }
-
   .home__carousel-counter {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     order: initial;
   }
-
   .card__refine-btn {
     grid-column: 2 / 3;
     grid-row: 3 / 4;
     order: initial;
+  }
+
+  /* Grille 3 colonnes desktop */
+  .home__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+  }
+  .home__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 }
