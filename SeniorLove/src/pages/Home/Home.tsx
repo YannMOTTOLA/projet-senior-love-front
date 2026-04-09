@@ -16,9 +16,12 @@ export default function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [tab, setTab] = useState<Tab>("profils");
-
   const [profiles, setProfiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Mobile : index 1 par 1 (0 à 8)
+  const [mobileIndex, setMobileIndex] = useState(0);
+  // Desktop : page de 3 en 3 (0, 1, 2)
   const [pageIndex, setPageIndex] = useState(0);
 
   /* ================= FETCH ================= */
@@ -28,37 +31,56 @@ export default function HomePage() {
       try {
         const meRes = await axiosInstance.get("/profile/me");
         const user = meRes.data;
-
         const alikeRes = await axiosInstance.get(
           `/profiles/alike/${user.shortId}${location.search}`
         );
-
         setProfiles(alikeRes.data);
+        setMobileIndex(0);
         setPageIndex(0);
       } catch (err) {
         console.error("Erreur chargement profils", err);
         setProfiles([]);
+        setMobileIndex(0);
         setPageIndex(0);
       } finally {
         setLoading(false);
       }
     };
-
     fetchProfiles();
   }, [location.search]);
 
-  /* ================= PAGINATION ================= */
-  const limitedProfiles = useMemo(() => profiles.slice(0, MAX_PROFILES), [profiles]);
+  /* ================= DONNÉES ================= */
+  const limitedProfiles = useMemo(
+    () => profiles.slice(0, MAX_PROFILES),
+    [profiles]
+  );
 
+  // Mobile
+  const currentProfile = useMemo(
+    () => limitedProfiles[mobileIndex] ?? null,
+    [limitedProfiles, mobileIndex]
+  );
+
+  // Desktop
   const totalPages = Math.ceil(limitedProfiles.length / PROFILES_PER_PAGE);
-
   const visibleProfiles = useMemo(
-    () => limitedProfiles.slice(pageIndex * PROFILES_PER_PAGE, (pageIndex + 1) * PROFILES_PER_PAGE),
+    () =>
+      limitedProfiles.slice(
+        pageIndex * PROFILES_PER_PAGE,
+        (pageIndex + 1) * PROFILES_PER_PAGE
+      ),
     [limitedProfiles, pageIndex]
   );
 
-  const canGoPrev = pageIndex > 0;
-  const canGoNext = pageIndex < totalPages - 1;
+  const buildProfileProps = (profile: any) => ({
+    id: getShortId(profile.id),
+    name: profile.name,
+    age: profile.member?.age ?? null,
+    city: profile.city?.name ?? "",
+    photoUrl: profile.profile_picture,
+    labels: (profile.interests ?? []).map((i: any) => i?.name).filter(Boolean),
+    isOnline: true,
+  });
 
   return (
     <main className="home">
@@ -86,75 +108,111 @@ export default function HomePage() {
       <section className="home__content">
         {tab === "profils" && (
           <>
-            {/* Bouton affiner + compteur */}
-            <div className="home__toolbar">
-              <button
-                className="card__refine-btn"
-                type="button"
-                onClick={() => navigate("/filters")}
-              >
-                Affiner la recherche
-              </button>
-
-              {!loading && limitedProfiles.length > 0 && (
-                <span className="home__counter">
-                  {pageIndex * PROFILES_PER_PAGE + 1}–
-                  {Math.min((pageIndex + 1) * PROFILES_PER_PAGE, limitedProfiles.length)}
-                  /{limitedProfiles.length}
-                </span>
-              )}
-            </div>
-
             {loading && <p>Chargement des profils...</p>}
 
             {!loading && limitedProfiles.length === 0 && (
               <p>Aucun profil ne correspond à votre recherche.</p>
             )}
 
-            {!loading && visibleProfiles.length > 0 && (
+            {!loading && limitedProfiles.length > 0 && (
               <>
-                <div className="home__grid">
-                  {visibleProfiles.map((profile) => (
+                {/* ===== MOBILE : carousel 1 par 1 ===== */}
+                <div className="home__mobile">
+                  <button
+                    className="card__refine-btn"
+                    type="button"
+                    onClick={() => navigate("/filters")}
+                  >
+                    Affiner la recherche
+                  </button>
+
+                  {currentProfile && (
                     <ProfileCard
-                      key={profile.id}
-                      profile={{
-                        id: getShortId(profile.id),
-                        name: profile.name,
-                        age: profile.member?.age ?? null,
-                        city: profile.city?.name ?? "",
-                        photoUrl: profile.profile_picture,
-                        labels: (profile.interests ?? [])
-                          .map((i: any) => i?.name)
-                          .filter(Boolean),
-                        isOnline: true,
-                      }}
-                      onOpenProfile={(profileId) => navigate(`/profile/${profileId}`)}
-                      onToggleLike={(profileId) => console.log("toggle like", profileId)}
-                      onBlock={(profileId) => console.log("block", profileId)}
+                      key={currentProfile.id}
+                      profile={buildProfileProps(currentProfile)}
+                      onOpenProfile={(id) => navigate(`/profile/${id}`)}
+                      onToggleLike={(id) => console.log("toggle like", id)}
+                      onBlock={(id) => console.log("block", id)}
                     />
-                  ))}
+                  )}
+
+                  <div className="home__carousel-controls">
+                    <button
+                      type="button"
+                      className="home__carousel-btn"
+                      onClick={() => setMobileIndex((i) => i - 1)}
+                      disabled={mobileIndex === 0}
+                      aria-label="Profil précédent"
+                    >
+                      ←
+                    </button>
+                    <span className="home__counter">
+                      {mobileIndex + 1}/{limitedProfiles.length}
+                    </span>
+                    <button
+                      type="button"
+                      className="home__carousel-btn"
+                      onClick={() => setMobileIndex((i) => i + 1)}
+                      disabled={mobileIndex === limitedProfiles.length - 1}
+                      aria-label="Profil suivant"
+                    >
+                      →
+                    </button>
+                  </div>
                 </div>
 
-                {/* Flèches pagination */}
-                <div className="home__carousel-controls">
-                  <button
-                    type="button"
-                    className="home__carousel-btn"
-                    onClick={() => setPageIndex(i => i - 1)}
-                    disabled={!canGoPrev}
-                    aria-label="Page précédente"
-                  >
-                    ←
-                  </button>
-                  <button
-                    type="button"
-                    className="home__carousel-btn"
-                    onClick={() => setPageIndex(i => i + 1)}
-                    disabled={!canGoNext}
-                    aria-label="Page suivante"
-                  >
-                    →
-                  </button>
+                {/* ===== DESKTOP : grille 3 par 3 ===== */}
+                <div className="home__desktop">
+                  <div className="home__toolbar">
+                    <button
+                      className="card__refine-btn"
+                      type="button"
+                      onClick={() => navigate("/filters")}
+                    >
+                      Affiner la recherche
+                    </button>
+                  </div>
+
+                  <div className="home__grid">
+                    {visibleProfiles.map((profile) => (
+                      <ProfileCard
+                        key={profile.id}
+                        profile={buildProfileProps(profile)}
+                        onOpenProfile={(id) => navigate(`/profile/${id}`)}
+                        onToggleLike={(id) => console.log("toggle like", id)}
+                        onBlock={(id) => console.log("block", id)}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="home__pagination">
+                    <button
+                      type="button"
+                      className="home__carousel-btn"
+                      onClick={() => setPageIndex((i) => i - 1)}
+                      disabled={pageIndex === 0}
+                      aria-label="Page précédente"
+                    >
+                      ←
+                    </button>
+                    <span className="home__counter">
+                      {pageIndex * PROFILES_PER_PAGE + 1}–
+                      {Math.min(
+                        (pageIndex + 1) * PROFILES_PER_PAGE,
+                        limitedProfiles.length
+                      )}
+                      /{limitedProfiles.length}
+                    </span>
+                    <button
+                      type="button"
+                      className="home__carousel-btn"
+                      onClick={() => setPageIndex((i) => i + 1)}
+                      disabled={pageIndex >= totalPages - 1}
+                      aria-label="Page suivante"
+                    >
+                      →
+                    </button>
+                  </div>
                 </div>
               </>
             )}
