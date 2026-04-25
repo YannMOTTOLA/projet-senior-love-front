@@ -136,11 +136,11 @@ export default function LoginForm() {
         localStorage.removeItem("email");
       }
 
-      if (["admin", "moderator"].includes(result.user.role)) {
+    if (["admin", "moderator"].includes(result.user.role)) {
         navigate("/BackOffice", { replace: true });
-      } else {
-        navigate("/Home", { replace: true });
-      }
+    } else {
+      navigate("/home", { replace: true });
+    }
     } finally {
       setIsSubmitting(false);
     }
