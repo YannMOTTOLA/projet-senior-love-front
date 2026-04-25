@@ -68,13 +68,16 @@ export function ProtectedRoute({
   // ============================================
 
   if (guestOnly) {
-    // Si connecté → redirection
-    if (user) {
-      return <Navigate to="/Home" replace />;
-    }
+  if (user) {
+    const redirectTo =
+      user.role === "admin" || user.role === "moderator"
+        ? "/BackOffice"
+        : "/home";
 
-    // Sinon (non connecté) → OK
-    return children;
+    return <Navigate to={redirectTo} replace />;
+  }
+
+  return children;
   }
 
   // Si isLoading = false et user = null, l'utilisateur n'est pas connecté
@@ -92,10 +95,13 @@ export function ProtectedRoute({
 
   // Si on a spécifié des rôles autorisés
   if (roles && !roles.includes(user.role)) {
-    // Et que le rôle de l'utilisateur n'est PAS dans la liste
-    // On le redirige vers une page "non autorisé"
-    return <Navigate to="/unauthorized" replace />;
-  }
+  const redirectTo =
+    user.role === "admin" || user.role === "moderator"
+      ? "/BackOffice"
+      : "/home";
+
+  return <Navigate to={redirectTo} replace />;
+}
 
   // ============================================
   // 7. TOUT EST OK: AFFICHER LE CONTENU
