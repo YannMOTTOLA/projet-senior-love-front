@@ -122,11 +122,3 @@ https://github.com/YannMOTTOLA/projet-senior-love-back
 ```
 
 ---
-
-## Déploiement
-
-Le projet est déployé sur Vercel :
-
-```txt
-https://projet-senior-love-front.vercel.app
-```
